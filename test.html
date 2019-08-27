@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		 <!-- <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> -->
+		<title>图标</title>
+		<script src="js/echarts.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/moment.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+		       #main{
+				   width: 600px;
+				   height: 400px;
+				   margin: 0 auto;
+				   font-size: 18px;
+			   }
+			   p{
+			   	position: relative;
+			   	display: block;
+			   	width: 100px;			 
+			   				   }
+			   p:before{
+			   	width: 100px;
+			   	height: 10px;
+			   	content: '';
+			    position: absolute;
+			    bottom: 0;
+			    right: 0;
+			    border-bottom: 1px solid #f8c80f;
+			    border-right: 1px solid #f8c80f;
+			    opacity: 0;
+			    transition: all 0.36s ease 0s;
+			   }
+			   ul{
+			   	display: flex;
+			   	justify-content: flex-start;
+			   	
+			   }
+			   li{
+			   	list-style: none;
+			   
+			   	padding: 10px;
+			   }
+			   li a{
+			   		position: relative;
+			   		padding:5px 15px;
+			   }
+			   li a:after{
+			   	content: '';
+			    position: absolute;
+			    bottom: 0;
+			    right: 0;
+			    border-bottom: 1px solid #f8c80f;
+			    border-right: 1px solid #f8c80f;
+			    opacity: 0;
+			    transition: all 0.36s ease 0s;
+			   }
+			   li a.active::after{
+			   	width: 9px;
+			    height: 10px;
+			    opacity: 1;
+			   }
+			   
+			   li a:before{
+			   	content: '';
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    border-top: 1px solid #f8c80f;
+			    border-left: 1px solid #f8c80f;
+			    opacity: 0;
+			    transition: all 0.36s ease 0s;
+			   }
+			   li a.active::before{
+			   	width: 9px;
+			    height: 10px;
+			    opacity: 1;
+			   }
+			   
+			   .contentExam{
+			   	width: 100px;
+			   	height: 100px;
+			   	background-color: red;
+			   }
+			   .contentExam::after{
+			    content: '';
+			   	display: block;
+			   	position: absolute;
+			   	width: 10px;
+			   	height: 10px;
+			   	left: 10px;
+			   	background-color: deepskyblue;
+			   }
+			   .contentExam::before{
+			   	content: '';
+			   	display: block;
+			   	position: absolute;
+			   	width: 10px;
+			   	height: 10px;
+			   	background-color: deepskyblue;
+			   }
+			   
+			   
+		</style>
+	</head>
+	
+	<body>
+		<div id="main"></div>
+		<ul>
+			<li><a class="active">123</a></li>
+			<li><a>456</a></li>
+			<li><a>789</a></li>
+		</ul>
+		
+		<a class="contentExam"></a>
+	   
+	    <svg width='500px' height='300px'>
+	    	<line  x1='10' x2='20'   y1='300' y2='300' style="stroke-width:10;stroke:rgb(0,0,0)"/>
+	    </svg>
+	    
+	    <form action="" method="post">
+	    	
+	    	<input type="submit" value="submit" disabled/>
+	    	<input type="search" name="googlesearch">
+	    	
+	    	
+	   
+  Select a week:
+  <input type="week" name="week_year">
+
+	    </form>
+		
+		<script type="text/javascript">
+			console.log(moment.unix(1529337900).format("YYYY-MM-DD hh:mm:ss"));
+			console.log(moment('2018-06-19 12:05:00').format('X'));
+			console.log(moment('2018-06-19 12:05:00').valueOf());
+			
+
+		     var myChart = echarts.init(document.getElementById("main"));
+		     
+			 var option = {
+				 title : {
+					 text : "环形图" ,   //大标题名称
+					 padding : 10,
+					 x : "center"
+				 },
+
+				 tooltip : {},
+
+				 legend : {
+				 	orient:"vertical",
+					data : ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎','直接查案'],
+					x:"right",
+					top:80
+				 },
+
+				  series: [
+                {
+                    name:'来源',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                    normal: {
+                        show: false
+                        }
+                    },
+                    data:[
+						{value:335, name:'直接访问'},
+						{value:310, name:'邮件营销'},
+						{value:234, name:'联盟广告'},
+						{value:135, name:'视频广告'},
+						{value:1548, name:'搜索引擎'},
+						{value:200, name:'直接查案'}
+                     ]
+                }
+                    ]
+			};
+
+			 myChart.setOption(option);
+			 
+			 var a = {
+			 	"nane":"jdksjjkl",
+			 	"age":45
+			 }
+			 
+			 var b= [a.age]
+			 console.log(b[0],7878787)
+			 
+			 let name = "Li xiao long"
+			 
+			 const sex = "男"
+			 
+			 let greeting = `\`Yo\` World!`;
+			 console.log(`you are ${name} ,性别:${greeting}`,555)
+			 let s = "x";
+			 let s1 = s.repeat(3);
+			 console.log(Number.isNaN("true"),789)
+			 
+			 function writ(x,y="world"){
+			 	return (x+y)
+			 }
+			 m=writ("hello"," china");
+			 console.log(m,8888)
+			 
+			 
+			const bmw=[1,2,3,4,'5m'];
+			for (value of bmw){
+				console.log(value);
+			}
+			 
+			 
+			var myObject={
+				name:"xiaomi",
+				age:19
+			}
+			console.log(myObject["age"],456)
+			
+			var m = 0;
+			while(m<10){
+				console.log("当前M的值为:"+m);
+				m=m+1
+			}
+			
+			var uri = location.href;
+			console.log(uri,"uri")
+			var encod = encodeURI(uri);
+			console.log(encod,777)
+			var encodCom = encodeURIComponent(uri)
+			console.log(encodCom,888)
+			
+			//产生随机数  Math.floor(Math.random()*可能值的总数+第一个可能的值)
+			//1-10之间的随机数
+			var num = Math.floor(Math.random()*10+1)
+			console.log(num,"随机数");
+			//计算可能值的总数
+			function selectFrom(lowValue,upperValue){
+				var choices = upperValue-lowValue+1;
+				return Math.floor(Math.random()*choices+lowValue)
+			}
+			var numbs = selectFrom(5,45);
+			console.log(numbs,"随机数1");
+			var Wx = ["nihao","jack","不吃鱼的猫","吃猫的米老鼠"];
+			var leng = Wx.length;
+			var wx_index = Math.floor(Math.random()*leng);
+			console.log(wx_index,"index")
+			console.log(Wx[wx_index],"获取随机号")
+			
+			var color = "blue";
+			function changeColor(){
+				if(color=="blue"){
+					color="red";
+				}else{
+					color ="blue"
+				}
+			}
+			changeColor();
+			console.log("color is" + color,89898);
+			console.log(color,7878)
+			 
+			 
+		</script>
+	</body>
+</html>

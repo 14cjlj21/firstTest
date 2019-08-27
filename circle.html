@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			.CanBlock{position: absolute;top:0;left: 0}
+			#svg{
+				background: url(image/20180817_072229.jpg);
+			}
+		</style>
+		<link rel="stylesheet" href="./css/circle.min.css">
+	</head>
+	<body>
+		<div class="box">				
+			<div class="box-content">1
+				<a href="">1-111111</a>
+				<a href="">1-222222</a>
+				<a href="">1-333333</a>
+			</div>
+			<div class="box-content">2</div>
+			<div class="box-content2">3</div>
+			<div class="box-content">4</div>
+			<p>你好啊
+					<div>1244553</div>
+			</p>
+		</div>	
+		
+		<div id="main"></div>
+		<ul>
+			<li><a class="active">123</a></li>
+			<li><a>456</a></li>
+			<li><a>789</a></li>
+		</ul>
+		<a class="contentExam"></a>
+		
+		<p>不好!!!!</p>
+		<div>我是去我去二翁</div>
+		<p>隔壁老王来啦</p>
+		<button onclick="getLocation()" id='getLocation'>点击获取地理位置</button>
+		<div id="" >
+			<video  width="320" height="240" controls="controls" style="background-color: red;">
+		    </video>
+		</div>
+		<div id="getlocalStorage"></div>
+        <button onclick="clickCounter()" type="button">点我</button>
+        <div id="getCount"> </div>
+		
+		
+		<canvas id="myCanvas" width="200px" height="100px" style="border: 1px solid #000000;"></canvas>
+
+		<!-- 背景网格和线条分开画，canvas位置重合 -->
+		<!--<div style="position: relative;top: 0;left: 0;width: 952px;">
+			<canvas class="CanBlock" id="canBack" width="960px" height="150px"></canvas>-->
+			<!--<canvas class="CanBlock" id="canLine" width="952px" height="200px"></canvas>-->
+		<!--</div>-->
+		
+		
+		<div class="" style="margin-top: 25px;margin-left: 20px;position: relative;width:1800px;height:1580px;overflow-x: auto">
+			<canvas id="canGrid" width="2000px" height="1560px" style="position: absolute;top: 0;left: 0;"></canvas>
+			<canvas id="canLine" width="2000px" height="1560px" style="position: absolute;top: 0;left: 0;"></canvas>
+			<canvas id="canTitle" width="2000px" height="1560px" style="position: absolute;top: 0;left: 0;"></canvas>
+		</div>
+		
+		<!--canvas画图-->
+		<div id="">
+			<img src="image/20180817_072229.jpg" id='myImg' width="432px" height="296px" alt="原始图片"/>
+			<canvas id="drawImg" width="442" height="306" style="border: 1px solid red;"></canvas>
+		</div>
+		
+		
+        <svg width="432" height="296" id='svg'>
+            <rect x="100" y="80" width="50" height="30" stroke="red" fill="transparent" stroke-width="4"/>
+            <polygon points="125,114 115,120 135,120"
+style="fill:#cccccc;
+stroke:#000000;stroke-width:1"/>
+        </svg>
+		
+	</body>
+	<!--<script src="js/canvas.js" type="text/javascript" charset="utf-8"></script>-->
+	<script src="js/drawCanvas.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var c=document.getElementById("drawImg");
+		var ctx=c.getContext("2d");
+		var img=document.getElementById("myImg");
+		img.onload = function() {
+			ctx.drawImage(img,5,5);
+			
+			ctx.strokeStyle='greenyellow';
+			ctx.strokeRect(100,50,30,20);
+			
+			ctx.beginPath();
+			ctx.moveTo(115,50);
+			ctx.lineTo(110,40);
+			ctx.lineTo(120,40);
+			ctx.fillStyle='cadetblue';
+			ctx.fill();
+			
+			ctx.beginPath();
+			ctx.strokeStyle='greenyellow';
+			ctx.strokeRect(100,30,30,10);
+			
+		} 
+//   ctx.moveTo(10,5);
+//   ctx.lineTo(100,200);
+//   ctx.lineWidth=10;
+//   ctx.strokeStyle='bisque';
+//   ctx.stroke();
+//   
+//   ctx.lineWidth=2;
+//    ctx.strokeStyle='red';
+//    ctx.strokeRect(10,10,100,50);
+		
+		function WebSocketTest(){
+			if('WebSocket' in window){
+				alert("您的浏览器支持 WebSocket!")
+			    var ws = new WebSocket("ws://172.16.108.8/HYAK/admin/code");
+			    ws.onopen = function () {
+				  // 使用 send() 方法发送数据
+				  ws.send("");
+				  alert("数据发送中...");
+				};
+				
+				// 接收服务端数据时触发事件
+				ws.onmessage = function (evt) {
+				  var received_msg = evt.data;
+				  alert("数据已接收...");
+				};
+				
+				// 断开 web socket 连接成功触发事件
+//				ws.onclose = function () {
+//				  alert("连接已关闭...");
+//				};
+				
+				
+				
+				
+				
+			}else{
+				alert("您的浏览器不支持 WebSocket!")
+			}
+		};
+		
+		WebSocketTest();
+		
+		
+		
+	var num=parseInt("7C7C7C7C7C",16);
+	console.log(num);
+//web 存储
+    if(typeof(Storage) !== 'undefined'){
+    	localStorage.sitename="官方网站";
+    	document.getElementById("getlocalStorage").innerHTML="文件说明:"+localStorage.sitename;
+    }else{
+    	document.getElementById("getlocalStorage").innerHTML="对不起,不支持!"
+    }
+//保存数据:localStorage.setItem(key,value)   读取数据:localStorage.getItem(key)   
+//删除单个数据:localStorage.removeItem(key)   删除所有数据:localStorage.clear()
+//得到某个index的key:localStorage.key(index)
+function clickCounter(){
+	if(typeof(Storage) !== "undefined"){
+		if(localStorage.clickcount){
+			localStorage.clickcount = Number(localStorage.clickcount)+1;
+		}else{
+			localStorage.clickcount=1;
+		}
+		document.getElementById("getCount").innerHTML="你已经点击了"+localStorage.clickcount+"次";
+	}else{
+		document.getElementById("getCount").innerHTML="不支持"
+	}
+}
+//canvas 画图
+    var c=document.getElementById("myCanvas");  //通过ID寻找canvas元素
+    var cxt = c.getContext("2d");               //创建 context 对象,getContext("2d") 对象是内建的 HTML5 对象，拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法。
+    var grd = cxt.createLinearGradient(1,1,150,75);
+    grd.addColorStop(0,'#ff0000');
+    grd.addColorStop(1,"#00ff00")
+    cxt.fillStyle=grd;                //渲染的颜色
+    cxt.fillRect(1,1,150,75)          //渲染的形状,位置,尺寸(1,1,150,75)  1,1代表渲染的位置x,y轴对应的位置,  150,75代表尺寸
+//	循环问题	
+	 var a = [];
+	for (var i = 0; i < 10; i++) {
+	 	a[i] = function () {
+	 		console.log(i);
+	 	};
+	};
+	 a[0]();a[1]();a[6](); 
+
+    //闭包解决方式
+	var b=[];
+	for (var i = 0 ; i < 10 ; i++){
+		(function(arg){
+			b[i] = function(){
+				console.log(arg)
+			}
+		})(i)
+	}
+    b[6]();
+
+	
+    //	es6解决方案
+	var c = [];
+	for (let i=0;i<10;i++){
+		c[i]=function(){
+			console.log(i)
+		}
+	}
+	c[2]();
+	c[9]();
+	
+	
+	
+//	es6 set和map函数
+//一:set
+	const setArr = new Set();
+	[1,2,3,4,5,5,6,2,3,1,1].forEach(x=>setArr.add(x));    //set数据自动去重
+	console.log(setArr);
+	for(let i of setArr){
+		console.log(i)
+	};
+
+    const set= new Set([1,2,34,5,6,7,8,1,2,3]); //接受数组参数
+    console.log(set.size);         //数据的长度
+    console.log([...set]);         //set结构的数据转化成数组     法一                
+    console.log(Array.from(set));  //set结构的数据转化成数组     法二
+    
+//  set 4个操作方法       add(value)：添加某个值，返回 Set 结构本身; 
+//                delete(value)：删除某个值，返回一个布尔值，表示删除是否成功; 
+//                has(value)：返回一个布尔值，表示该值是否为Set的成员; 
+//                clear()：清除所有成员，没有返回值
+    const s = new Set();
+    s.add(1).add(2).add(3).add(3);      //添加值
+    console.log(s,s.size);
+    
+    s.delete(3);
+    console.log(s.size,s.has(1),s.has(3));
+    s.has(1);
+
+//  set 4个遍历方法       keys()：返回键名的遍历器; 
+//                values()：返回键值的遍历器 
+//                entries()：返回键值对的遍历器  , 由于 Set 结构没有键名，只有键值（或者说键名和键值是同一个值），所以keys方法和values方法的行为完全一致
+//                forEach()：使用回调函数遍历每个成员
+    for(let item of s.keys()){
+    	console.log("键名是:"+item);
+    };
+    for(let item of s.values()){
+    	console.log('键值是:'+item)
+    };
+    for(let item of s.entries()){
+    	console.log(item)
+    }
+//对象结构 在使用这个几个方法的时候类似，但有一定区别
+	const obj = { 1: 'a', 2: 'b', 3: 'c' }
+	for (let item of Object.keys(obj)) {
+	  console.log(item);
+	}
+    for (let item of Object.values(obj)) {
+	  console.log(item);
+	}
+    for (let item of Object.entries(obj)) {
+	  console.log(item);
+	}
+ 
+//Set 结构的实例默认可遍历，它的默认遍历器生成函数就是它的values方法。这意味着，可以省略values方法，直接用for...of循环遍历 Set
+    for (let i of s) {
+      console.log(i)
+    }
+    
+//WeakSet 结构与 Set 类似，也是不重复的值的集合,
+//(1):WeakSet 可以接受数组和类似数组的对象作为参数。该数组的所有成员都会自动成为WeakSet的实例对象的成员。数组成员只能是对象，不能是其他类型的值。否则报错。
+	const wa = [[1, 2], [3, 4], {a: 1}]
+	const ws = new WeakSet(wa)
+	console.log('ws:'+ws)
+//(2):WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用，也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，
+//不考虑该对象还存在于 WeakSet 之中。
+
+//实际应用:去重,并交叉集
+    let arrys=[1,2,3,3,4,5,6,6,6,7,8,9,0,0,0];
+    let uniqArr=[...new Set(arrys)];
+    console.log('uniqArr:'+uniqArr)
+    
+
+//二:Map函数
+//	const dataMap = new Map()
+//	dataMap.set(element, 'div')
+//	dataMap.get(element)  // div
+
+//  has,delete
+//	dataMap.has(element)    //  true
+//	dataMap.delete(element) //  true
+//	dataMap.has(element)    //  false
+
+	const map = new Map();
+//  可以采用链式写法。
+	map.set('a', 1).set('b', 2)
+	map.size          // 2
+	map.get('b')      // 2
+	map.set('b', 222)
+	map.get('b')      // 222
+	map.get('c')      // undefined
+	map.has('b')      // true
+	map.delete('b')   // true
+	map.has('b')      // false
+	map.clear()
+	map.size          // 0
+
+//Map转数组
+const myMap=new Map()
+    .set(true,7)
+    .set({foo:3})
+    .set(['abc'])
+console.log('map转数组:'+[...myMap] )     //转为数组
+
+//数组转为Map:数组传入Map构造函数就行
+new Map([
+	[true,10],
+	[{foos:18},['mpk']]
+])
+
+//Map 转为对象(如果所有 Map 的键都是字符串，它可以无损地转为对象,如果有非字符串的键名，那么这个键名会被转成字符串，再作为对象的键名)
+function strMapToObj(strMap){
+	let obj = Object.create(null);
+	for([k,v] of strMap){
+		obj[k] = v ;
+	}
+	return obj;
+}
+const myMap1 = new Map()
+               .set('yes',true)
+               .set('no',false);
+strMapToObj(myMap1);
+
+//对象转为Map
+function objToStrMap(obj){
+	let strMap = new Map();
+	for(let k of Object.keys(obj)){
+		strMap.set(k,obj[k]);
+	}
+	return strMap;
+}
+console.log('对象转为Map:'+objToStrMap({yes:true,no:false}))
+
+
+//Map 转 JSON
+function strMapToJson(strMap){
+	return JSON.stringify(strMapToObj(strMap));
+}
+let myMap2=new Map().set('yes',true).set('no',false);
+console.log('对象Json'+strMapToJson(myMap2))    //Map 的键名都是字符串，这时可以选择转为对象 JSON。
+
+function mapToArrayJson(map){
+	return JSON.stringify([...map]);
+}
+let myMap3=new Map().set(true,7).set({foos:3}).set(['abc']);
+console.log('数组JSON'+ mapToArrayJson(myMap3))  
+
+
+//数组方法
+//Array.of()方法会将方法传入的参数全部作为数组里的数据内容，而不管参数的数量与类型：  转化为数组
+	let items = Array.of(1,'2');   
+	console.log(items); 
+	console.log(items.length); 
+	
+//Array.from()方法可以将类数组对象和可迭代对象转换成数组。(类数组)
+//indexOf()和lastIndexOf()方法用于查找特定值在数组中的位置，而如果需要查找在数组中满足特定条件的元素就需要使用find()和findIndex()方法。
+	let arr1 = Array.of(1,5,8,9);       //转化为数组
+	console.log(arr1.find(item=>item>5)); //8   找到大于5的值,index为0的地方开始找到的第一个满足条件的值
+	console.log(arr1.findIndex(item=>item>5)); //2   找到大于5的值的索引index为0的地方开始找到的第一个满足条件的值
+	
+//fill()方法能使用特定值填充数组中的一个或多个元素。当只使用一个参数的时候，该方法会用该参数的值填充整个数组。若你不想改变数组中的所有元素，而只想改变其中一部分，
+//那么可以使用可选的起始位置参数与结束位置参数（不包括结束位置的那个元素）。
+	//arr.fill(value, startIndex, endIndex)    包括startIndex,不包括endIndex,若没有指定endIndex,则默认length-1
+	let arr2 = Array.of(1,5,8,9);
+    console.log(arr2.fill(1,2,4)); //[1, 5, 1, 1]
+    
+//copyWithin() 方法允许你在数组内部复制自身元素,copyWithin(复制位置的index,被复制数字的起始index,被复制数字的结束index(不包括改位置的数字))
+    let arr3 = Array.of(1,5,8,9);
+    console.log(arr3.copyWithin(2,0,2)); //[1, 5, 1, 5]
+
+//原型链
+	function Person(){};
+	var p = new Person();
+	console.log(p)
+
+//html5 获取位置信息
+var locat = document.getElementById('getLocation');
+function getLocation(){
+	if(navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(showPointer)
+	}else{
+		locat.innerHTML="用户禁止获取地理位置"
+	}
+};
+//获取位置的经纬度
+function showPointer(){
+	locat.innerHTML="Latitude: " + position.coords.latitude + 
+"<br />Longitude: " + position.coords.longitude;	
+}
+
+
+//bad
+function test(color) {
+	switch (color) {
+		case 'red':
+		return ['apple', 'strawberry'];
+		case 'yellow':
+		return ['banana', 'pineapple'];
+		case 'purple':
+		return ['grape', 'plum'];
+		default:
+		return [];
+	}
+}
+
+test('yellow');
+
+// good
+const fruitColor = {
+	red: ['apple', 'strawberry'],
+	yellow: ['banana', 'pineapple'],
+	purple: ['grape', 'plum']
+};
+
+function test1(color) {
+  return fruitColor[color] || [];
+}
+
+// better
+const fruitColor1 = new Map()
+  .set('red', ['apple', 'strawberry'])
+  .set('yellow', ['banana', 'pineapple'])
+  .set('purple', ['grape', 'plum']);
+
+function test2(color) {
+   return fruitColor.get(color) || [];
+}
+	console.log(test2(red),22222);
+</script>
+</html>

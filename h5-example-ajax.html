@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>测试练习</title>
+	</head>
+	<body>
+		<img id="u-img">
+		<ul>
+			<li>姓名：<span id="u-name"></span></li>
+			<li>年龄：<span id="u-age"></span></li>
+			<li>性别：<span id="u-sex"></span></li>
+		</ul>
+		<div id="">
+			<h3>echarts 图表</h3>
+			<div id="currentTemp" style="height: 300px;"></div>
+		</div>
+	</body>
+	<script src="js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/echarts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/moment.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		//页面加载完成后处理数据
+		$(function(){
+			$.ajax({
+				type:"get",//String，请求方式 ("POST" 或 "GET")， 默认为 "GET"
+				url:"mokeyJson/appData.json",//String，发送请求的地址
+				async:true,      //请求方式默认异步，若同步改为false即可
+				dataType:"JSON", //String  预期服务器返回的数据类型。
+				data:{
+					//发送到服务器的参数
+				},
+				success:function(res){//Function，请求成功时调用此函数，参数：由服务器返回，并根据 dataType 参数进行处理后的数据；描述状态的字符串。
+					dealDate(res.data);
+					createEcharts(res.data)
+				},
+				error:function(){}   //Function，请求失败时调用此函数
+			});
+		})
+		
+		//处理页面数据
+		function dealDate(userInfo){
+			$("#u-img").attr("src",userInfo.userInfo.image)
+			$("#u-name").text(userInfo.userInfo.username)
+		}
+		
+		//基于准备好的DOM，初始化图表
+		var currentTemp = echarts.init(document.getElementById("currentTemp"));
+		
+		//显示图表的加载动画
+		currentTemp.showLoading()
+		
+		//窗口变化时重置图标
+		window.onresize = function(){
+			currentTemp.resize()
+		}
+		
+		//处理数据画图
+		function createEcharts(data){ 
+			currentTemp.hideLoading();   //隐藏加载动画
+			var curTempX = [];    //当前温度X轴数据
+			var curTempY = [];    //当前温度Y轴数据
+			if(data.temp) {
+				if(data.temp.day.length && data.temp.day.length > 0) {
+					data.temp.day.map((temp, index) => {
+						curTempX.push(temp.create_time);
+						curTempY.push(temp.temperature)
+					})
+				}
+			}
+
+			var curTempOption = {
+				title: {
+					text: '当前温度'
+				},
+				tooltip: {},
+				legend: {
+					data: ['温度']
+				},
+				xAxis: {
+					data: curTempX
+				},
+				yAxis: {},
+				series: [{
+					name: '温度',
+					type: 'bar',
+					data: curTempY
+				}]
+			}
+			
+			currentTemp.setOption(curTempOption);
+		}
+	</script>
+</html>

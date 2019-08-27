@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>事件</title>
+	</head>
+	<body>
+		
+		<div id="" onclick="faFun()">
+			<p onclick="childFun()" id="pTxt">12121212</p>
+		</div>
+		
+		<div id="thisID" onclick="handleClick(this)">点击显示</div>
+		<ul id="ulText">
+			hfhdjfh 
+			<li>12</li>
+			<li>34</li>
+			<li>3434</li>
+			<li>676</li>
+		</ul>
+			
+		<input type="submit" value="这是值" onclick="onSubmit()" id="12" name="inputName" />
+		<br/>
+		<img src="image/20180817_072229.jpg" id="getImg"/>
+	
+	    <br/>
+	    <select id="mySelect">
+		  <option value="1">1</option>
+		  <option value="2">2</option>
+		  <option value="3">3</option>
+		</select>
+		
+		 <select size="1" onchange="changeEventHandler(event);">
+		   <option>chocolate</option>
+		   <option>strawberry</option>
+		   <option>vanilla</option>
+		 </select>
+		 
+		 <form action="" method="post" onsubmit="formSubmit(event)">
+		 	
+		 	<input type="submit" value="姓名" name="inputName"/>
+		 	<button>提交表单</button>
+		 </form>
+		
+		
+	</body>
+	<script src="js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+//	监听函数--浏览器的事件模型，就是通过监听函数（listener）对事件做出反应。事件发生后，浏览器监听到了这个事件，就会执行对应的监听函数。
+//HTML 的 on- 属性      onload  onclick, 使用这个方法指定的监听代码，只会在冒泡阶段触发(子元素一直向上冒泡到最外层的父元素 ,触发父元素的事件,子元素事件先发生)。
+        function childFun(){
+          const ele = $("#pTxt");
+          ele.html("我是子元素")
+          console.log("我是子元素")
+        }
+        
+        function faFun(){
+          console.log("我是父元素")
+        	
+        }
+        
+//   元素节点的事件属性,也是只会在冒泡阶段触发  window.onload = doSomething;  div.onclick = function (event) {console.log('触发事件');};
+//EventTarget.addEventListener() 所有 DOM 节点实例都有addEventListener方法，用来为该节点定义事件的监听函数。 window.addEventListener('load', doSomething, false);
+
+//this 的指向: 监听函数内部的this指向触发事件的那个元素节点。
+         function handleClick(e){
+         	//<div id="thisID" onclick="handleClick(this)">点击显示</div>   this指向div本身
+         	console.log(e.id,7878787)
+         }
+         
+ //事件的代理:由于事件会在冒泡阶段向上传播到父节点，因此可以把子节点的监听函数定义在父节点上，由父节点的监听函数统一处理多个子元素的事件。这种方法叫做事件的代理（delegation）。
+ const ul =  document.querySelector('ul');
+ ul.addEventListener('click',function(event){
+ 	if(event.target.tagName.toLowerCase() === 'li'){
+ 		console.log('点击成功');
+ 		console.log(event,7878787878787)
+ 	}
+ })
+ 
+ 
+ function onSubmit(){
+ 	
+ 	alert(1212121);
+ 	console.log(event)
+ 	
+ };
+ 
+//触发事件以后，会产生一个事件对象，这个对象包含着所有与事件相关的信息.作为参数传给监听函数。浏览器原生提供一个Event对象，所有的事件都是这个对象的实例，或者说继承了Event.prototype对象。(创建一个封装着元素属性值的函数,这个函数中有一个局部变量event,也就是事件对象)
+//
+//Event.preventDefault()取消浏览器对当前事件的默认行为。比如点击链接后，浏览器默认会跳转到另一个页面，使用这个方法以后，就不会跳转了；再比如，按一下空格键，页面向下滚动一段距离，使用这个方法以后也不会滚动了。
+//该方法生效的前提是，事件对象的cancelable属性为true，如果为false，调用该方法没有任何效果。
+//注意，该方法只是取消事件对当前元素的默认影响，不会阻止事件的传播。如果要阻止传播，可以使用stopPropagation()或stopImmediatePropagation()方法。
+
+//事件流描述的是从页面中接受事件的顺序.ie的事件流是冒泡流,事件开始时由最具体的元素接受,然后逐级向上传播到较为不具体的节点.例如:点击了页面的div元素  div->body->html->document
+//Netscape的事件流是事件捕获流.document->html->body->div(基本不用,除非特使情况)
+
+//addEventListener(要处理的事件名,事件处理程序,一个布尔值) ul.addEventListener("click",function(){},true),true表示在捕获阶段调用事件处理程序,false冒泡阶段调用事件处理程序
+function success(){
+	alert("加载成功!!")
+}
+
+var imgs = document.getElementById("getImg");
+
+	imgs.addEventListener("load",function(){
+//		imgs.style.display = 'none';
+		console.log(1212121212)
+	},false)
+
+//事件类别:鼠标事件,键盘事件,进度事件,表单事件,触摸事件,拖拉事件,
+//键盘事件:keydown：按下键盘时触发。    keypress：按下有值的键时触发，即按下 Ctrl、Alt、Shift、Meta 这样无值的键，这个事件不会触发。对于有值的键，按下时先触发keydown事件。 keyup：松开键盘时触发该事件。
+//表单事件: input 事件,select 事件 ,change事件:当<input>、<select>、<textarea>的值发生变化时触发, invalid事件:用户提交表单时，如果表单元素的值不满足校验条件，就会触发invalid事件。reset 事件，submit 事件  
+    function secHandler(e){
+    	console.log(e)
+    	console.log(e.target.value)
+    	console.log(e.data)
+    }
+    var seleDom = document.getElementById("mySelect");
+    seleDom.addEventListener("input",secHandler)
+    
+    function changeEventHandler(e){
+    	console.log(e,89898);
+    	console.log(e.target.value,7878878)
+    }
+    
+    function formSubmit(e){
+    	e.preventDefault();
+    	console.log("提交表单,阻止默认事件成功");
+    	console.log(e)
+    	var form = new FormData();
+  
+    }
+
+		</script>
+</html>

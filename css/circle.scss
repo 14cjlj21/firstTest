@@ -1,0 +1,17 @@
+.box{
+    .box-content:first-child{
+        width: 500px;
+        height: 50px;
+        background-color: bisque;
+        color: #000;
+    }
+    p:last-child{
+        color: blue;
+    }
+}
+.box+p{
+    color: red;
+}
+p:only-child{
+    color: blue;
+}

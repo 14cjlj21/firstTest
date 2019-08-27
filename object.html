@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>es6知识点--Object</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+//什么是对象? 对象是单个实物的抽象,对象是一个容器,封装了属性(property)和方法(method),对象的生成需要某一个模板(表示某一类实物的共同特征).类就是对象的模板,对象就是类的实例.
+//js对象体系是根据构造函数(constructor)和原型链(prototype).js使用构造函数作为对象的模板.构造函数就是专门用来生成实例对象的函数,描述实例对象的基本结构.一个构造函数可以生成多个实例对象,这些实例对象都具有相同的结构.
+//构造函数就是一个普通的函数,有自己的特征和用法.构造函数名首字母大写.构造函数也可以接受参数
+//构造函数2个特点:(1)函数内部使用this关键字,代表所要生成的实例对象.(2)生成对象的时候,必须使用new命令
+//new 命令的作用:执行构造函数,返回一个实例对象
+var Vehicle = function(){
+	this.price = 1000;    //内部使用this,代表所要生成的对象
+}
+var v = new Vehicle()  //使用new关键字让构造函数Vehicle生成1个实例,保存在变量v中
+console.log(v.price,78787878)   //新生成的实例对象从构造函数Vehicle得到price属性
+	
+//new 命令的原理   (1)创建一个空对象,作为将要返回的对象实例;(2)将这个空对象的原型指向构造函数的prototype属性;(3)将这个空对象赋值给函数内部的this关键字;(4)开始执行构造函数内部的代码
+//new.target 函数内部可以使用new.target属性。如果当前函数是new命令调用，new.target指向当前函数，否则为undefined。使用这个属性，可以判断函数调用的时候，是否使用new命令。
+function F(){
+	console.log(new.target === F,"调用new")
+}
+console.log(F(),"未使用new");
+console.log((new F()),"使用new");
+function F1(){
+	if (! new.target) {
+		console.log("请使用new运算符")
+	} else{
+		console.log("调用成功")
+	}
+}
+console.log(F1(),"判断是否使用new操作符")
+
+//Object.create() 创建实例对象:构造函数作为模板，可以生成实例对象。但是，有时拿不到构造函数，只能拿到一个现有的对象。我们希望以这个现有的对象作为模板，生成新的实例对象，这时就可以使用Object.create()方法。
+var person = {
+	name:"Jason",
+	age:18,
+	geeting:function(){
+		return (`大家好,我叫 ${this.name}`)
+	}
+}
+var person1 = Object.create(person);  //对象person是person1的模板，后者继承了前者的属性和方法。
+   console.log(person1.geeting(),888)
+   
+//this 关键字: this可以用在构造函数之中，表示实例对象。除此之外，this还可以用在别的场合。但不管是什么场合，this都有一个共同点：它总是返回一个对象。this就是属性或方法“当前”所在的对象。
+//由于对象的属性可以赋给另一个对象，所以属性所在的当前对象是可变的，即this的指向是可变的。只要函数被赋给另一个变量，this的指向就会变.this就是函数运行时所在的对象（环境）
+//JavaScript 语言之所以有 this 的设计，跟内存里面的数据结构有关系。
+var obj = { foo:  5 };
+//上面的代码将一个对象赋值给变量obj。JS引擎会先在内存里面，生成一个对象{ foo: 5 }，然后把这个对象的内存地址赋值给变量obj。也就是说，变量obj是一个地址（reference）。后面如果要读取obj.foo，引擎先从obj拿到内存地址，然后再从该地址读出原始的对象，返回它的foo属性。
+//原始的对象以字典结构保存，每一个属性名都对应一个属性描述对象。举例来说，上面例子的foo属性，实际上是以下面的形式保存的。
+//{
+//foo: {
+//  [[value]]: 5     //对应的值
+//  [[writable]]: true  //是否可写
+//  [[enumerable]]: true
+//  [[configurable]]: true
+//}
+//}//foo属性的值保存在属性描述对象的value属性里面。
+var object1 = { foo: function () {} };//属性的值是一个函数。这时，引擎会将函数单独保存在内存中，然后再将函数的地址赋值给foo属性的value属性。由于函数是一个单独的值，所以它可以在不同的环境（上下文）执行。
+//this 使用的场合:
+   //(1)全局环境,指向顶层对象window,不管是不是在函数内部，只要是在全局环境下运行，this就是指顶层对象window
+   //(2)构造函数中的this,指向实例对象
+   //(3)对象的方法,如果对象的方法里面包含this，this的指向就是方法运行时所在的对象。该方法赋值给另一个对象，就会改变this的指向。
+   
+   //如果this所在的方法不在对象的第一层，这时this只是指向当前一层的对象，而不会继承更上面的层。
+   //由于this的指向是不确定的，所以切勿在函数中包含多层的this。
+   //一个解决方法是在第二层改用一个指向外层this的变量。
+   
+
+   var object2 = {
+   	P:"hello",
+   	b:{
+   		m:function(){
+   			console.log(this.p,"打印")
+   		}
+   	}
+   }
+    console.log(object2.b.m(),"this指向") ;   //undefined,object2.b.m方法在object2对象的第二层，该方法内部的this不是指向a，而是指向object2.b
+    
+    //避免数组处理方法中的 this:数组的map和foreach方法，允许提供一个函数作为参数。这个函数内部不应该使用this。
+    var arrObj = {
+    	v:"hello",
+    	p:["a1","a2"],
+    	f:function f(){
+    		var that = this;
+    		this.p.forEach(function(item){
+    			console.log(that.v + " " + item)
+    		})
+    	}
+    }
+    console.log(arrObj.f(),"数组函数使用this")   //undefined,foreach方法的回调函数中的this，其实是指向window对象，因此取不到arrObj.v的值。内层的this不指向外部，而指向顶层对象。解决这个问题的一种方法，就是前面提到的，使用中间变量固定this。
+	//另一种方法是将this当作foreach方法的第二个参数，固定它的运行环境。
+	//回调函数中的this往往会改变指向，最好避免使用。
+	 var arrObj1 = {
+    	v:"hello",
+    	p:["a3","a4"],
+    	f:function f(){
+    		this.p.forEach(function(item){
+    			console.log(this.v + " " + item)
+    		},this)
+    	}
+    }
+    console.log(arrObj1.f(),"数组函数使用this") 
+    
+    //绑定this: 把this固定下来，可避免出现意想不到的情况。JavaScript 提供了call、apply、bind这三个方法，来切换/固定this的指向。
+    //Function.prototype.call():函数实例的call方法，可以指定函数内部this的指向（即函数执行时所在的作用域），然后在所指定的作用域中，调用该函数。
+    //call方法的参数，应该是一个对象。如果参数为空、null和undefined，则默认传入全局对象。
+    var objCall={};
+    var funcF= function(){
+    	return this;
+    }
+    console.log(funcF() === window,"指向全局")  
+    console.log(funcF.call(objCall) === objCall,"改变this指向") //call方法可以改变this的指向，指定this指向对象objCall，然后在对象objCall的作用域中运行函数funcF。
+    
+    //如果call方法的参数是一个原始值，那么这个原始值会自动转成对应的包装对象，然后传入call方法。
+    var fNum = function(){
+    	return this;
+    }
+    console.log(fNum.call(5),"传入原始值");
+    
+    //call方法还可以接受多个参数,call的第一个参数就是this所要指向的那个对象，后面的参数则是函数调用时所需的参数。
+    function add(a,b){
+    	return a+b;
+    }
+    console.log(add.call(this,3,4));
+    
+    //call方法的一个应用是调用对象的原生方法
+    var obj12={};
+    console.log(obj12.hasOwnProperty('toString'),66666666);
+    obj12.hasOwnProperty = function(){
+    	return true;
+    }
+    console.log(obj12.hasOwnProperty('toString'),777777);
+    Object.prototype.hasOwnProperty.call(obj12,'toString')
+    
+    //Function.prototype.apply(),apply方法的作用与call方法类似，也是改变this指向，然后再调用该函数。唯一的区别就是，它接收一个数组作为函数执行时的参数，func.apply(thisValue, [arg1, arg2, ...])
+    //apply方法的第一个参数也是this所要指向的那个对象，如果设为null或undefined，则等同于指定全局对象。第二个参数则是一个数组，该数组的所有成员依次作为参数，传入原函数。原函数的参数，在call方法中必须一个个添加，但是在apply方法中，必须以数组形式添加。
+    function f(x,y){
+    	return x+y
+    }
+    console.log(f.call(null,1,6));
+    console.log(f.apply(null,[4,5]))
+    
+    //结合使用apply方法和Math.max方法，就可以返回数组的最大元素。通过apply方法，利用Array构造函数将数组的空元素变成undefined,利用数组对象的slice方法，可以将一个类似数组的对象（比如arguments对象）转为真正的数组。绑定回调函数的对象
+    //获取数组的最大元素
+    var aMax=[23,56,12,5,78,90,99]
+    console.log(Math.max.apply(null,aMax),"获取数组的最大值") 
+    //将数组的空元素变为undefined
+    console.log(Array.apply(null,['a',,'b']),"数组空元素变为undefined") //空元素与undefined的差别在于，数组的forEach方法会跳过空元素，但是不会跳过undefined。因此，遍历内部元素的时候，会得到不同的结果。
+    //转换类似数组的对象
+    Array.prototype.slice.apply({0: 1, length: 1}) // [1]
+    Array.prototype.slice.apply({0: 1}) // []
+	Array.prototype.slice.apply({0: 1, length: 2}) // [1, undefined]
+	Array.prototype.slice.apply({length: 1}) // [undefined]
+	//上面代码的apply方法的参数都是对象，但是返回结果都是数组，这就起到了将对象转成数组的目的。从上面代码可以看到，这个方法起作用的前提是，被处理的对象必须有length属性，以及相对应的数字键。
+	//绑定回调函数的对象
+	var oo = new Object();
+	oo.f= function(){
+		console.log(this===o)
+	}
+	var fo= function(){
+		oo.f.call(o)
+	}
+	
+	//Function.prototype.bind():bind方法用于将函数体内的this绑定到某个对象，然后返回一个新函数。
+	var d=new Date();
+	console.log(d.getTime(),"当前时间")
+	
+	const print = d.getTime;
+	//console.log(print(),"this指向")  //this is not a Date object,因为getTime方法内部的this，绑定Date对象的实例，赋给变量print以后，内部的this已经不指向Date对象的实例了。
+	const print1 = d.getTime.bind(d); //bind方法的参数就是所要绑定this的对象，
+	console.log(print1(),"bind改变this指向")
+	//this绑定到其他对象也是可以的。
+	var counter ={
+		count:1,
+		inc:function(){
+			this.count++
+		}
+	}
+	var obj11={
+		count:99
+	}
+	var func = counter.inc.bind(obj11);
+	func()
+	console.log(obj11.count,"this绑定到其他对象")
+		
+//Object.is用来比较两个值是否严格相等，与严格比较运算符（===）的行为基本一致。
+	console.log(NaN===NaN,1);
+	console.log(Object.is(NaN,NaN),2);
+
+//Object.assign方法用于对象的合并，将源对象（source）的所有可枚举属性，复制到目标对象（target）。第一个参数是目标对象，后面的参数都是源对象。
+//注意，如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性。
+//如果只有一个参数，Object.assign会直接返回该参数。如果该参数不是对象，则会先转成对象，然后返回。由于undefined和null无法转成对象，所以如果它们作为参数，就会报错。
+//如果非对象参数出现在源对象的位置（即非首参数），那么处理规则有所不同。首先，这些参数都会转成对象，如果无法转成对象，就会跳过。这意味着，如果undefined和null不在首参数，就不会报错。
+//其他类型的值（即数值、字符串和布尔值）不在首参数，也不会报错。但是，除了字符串会以数组形式，拷贝入目标对象，其他值都不会产生效果。
+//Object.assign拷贝的属性是有限制的，只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）。
+
+	const target={a:1};
+	const soure1={b:2};
+	const soure2={c:3};
+	const str="hell"
+//  target1 = Object.assign(target,soure1,soure2);
+    Object.assign(target,soure1,soure2);
+//		console.log(target1,3)
+	console.log(target,4)
+	target2 = Object.assign({},str);
+	console.log(target2,5)
+//Object.assign方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用,这个对象的任何变化，都会反映到目标对象上面。
+    const obj1={a:{b:10}};
+    const obj2= Object.assign({},obj1);
+    console.log(obj2,6)
+    obj1.a.b=11;
+    console.log(obj2,7)
+//对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。
+    const targets = { a: { b: 'c', d: 'e' } }
+    const sources = { a: { b: 'hello' } }
+    Object.assign(targets, sources)
+	console.log(targets,8);
+//Object.assign可以用来处理数组，但是会把数组视为对象。Object.assign把数组视为属性名为 0、1、2 的对象，因此源数组的 0 号属性4覆盖了目标数组的 0 号属性1。
+    const arr=Object.assign([1, 2, 3], [4, 5]);
+	console.log(arr,9);
+//Object.assign只能进行值的复制，如果要复制的值是一个取值函数，那么将求值后再复制。
+
+
+
+//Set和Map数据结构
+
+//ES6 提供了新的数据结构 Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。Set本身是一个构造函数，用来生成 Set 数据结构。
+//Set函数可以接受一个数组（或者具有 iterable 接口的其他数据结构）作为参数，用来初始化。
+    const set = new Set([1,2,3,4,5,6,7,8,9])
+    console.log([...set],10);
+// 去除数组的重复成员  	[...new Set(array)]
+//去除字符串里面的重复字符。[...new Set('ababbc')].join('')
+//向 Set 加入值的时候，不会发生类型转换,在 Set 内部，两个NaN是相等。另外，两个对象总是不相等的。
+// Set实例的4个操作方法
+// add(value)：添加某个值，返回 Set 结构本身。set.add()
+// delete(value)：删除某个值，返回一个布尔值，表示删除是否成功。
+// has(value)：返回一个布尔值，表示该值是否为Set的成员。
+// clear()：清除所有成员，没有返回值。
+
+// Array.from方法可以将 Set 结构转为数组。数组去重的另一方法
+	function dedupe(array) {
+	  return Array.from(new Set(array));
+	}
+	dedupe([1, 1, 2, 3])
+
+//Set 结构的实例有四个遍历方法，可以用于遍历成员,keys()，values()，entries(),forEach(),由于 Set 结构没有键名，只有键值（或者说键名和键值是同一个值），所以keys方法和values方法的行为完全一致。
+    let sets=new Set(["blue","red","pink"])
+	for(let item of sets.keys()){
+		console.log(item,11);
+	};
+	for (let item of sets.values()){
+		console.log(item,12);
+	}
+	for (let item of sets.entries()){
+		console.log(item,13);
+	}
+// Set 结构的实例与数组一样，也拥有forEach方法，用于对每个成员执行某种操作，没有返回值。
+     let setForEach = new Set([1,3,7]);
+	setForEach.forEach((key,value)=>console.log(`${key}:${value}`));
+//运用--数组去重
+	let arrs = [3, 5, 2, 2, 5, 5];
+	let unique = [...new Set(arrs)];
+	console.log(unique,14);
+
+
+//Map数据结构
+//Map 数据结构。它类似于对象，也是键值对的集合，但是“键”的范围不限于字符串，各种类型的值（包括对象）都可以当作键。
+//也就是说，Object 结构提供了“字符串—值”的对应，Map 结构提供了“值—值”的对应，是一种更完善的 Hash 结构实现。如果你需要“键值对”的数据结构，Map 比 Object 更合适。
+//Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键
+    const m = new Map();
+	const o = {p: 'Hello World'};
+	m.set(o, 'content')   //o是健,content是值
+	m.get(o) // "content"
+	m.has(o) // true
+	m.delete(o) // true
+	m.has(o) // false
+
+//set(key, value),set方法设置键名key对应的键值为value，然后返回整个 Map 结构。如果key已经有值，则键值会被更新，否则就新生成该键
+	const m1 = new Map();
+	m1.set('edition', 6)        // 键是字符串
+	m1.set(262, 'standard')     // 键是数值
+	m1.set(undefined, 'nah')    // 键是 undefined
+//set方法返回的是当前的Map对象，因此可以采用链式写法
+	let map1 = new Map()
+	  .set(1, 'a')
+	  .set(2, 'b')
+	  .set(3, 'c');
+//get(key) get方法读取key对应的键值，如果找不到key，返回undefined。
+//has(key) has方法返回一个布尔值，表示某个键是否在当前 Map 对象之中。
+//delete(key) delete方法删除某个键，返回true。如果删除失败，返回false。
+//clear() clear方法清除所有成员，没有返回值。
+//Map 结构原生提供三个遍历器生成函数和一个遍历方法。
+//keys()：返回键名的遍历器。
+//values()：返回键值的遍历器。
+//entries()：返回所有成员的遍历器。
+//forEach()：遍历 Map 的所有成员。
+
+//Promise对象
+//Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大.从语法上说，Promise 是一个对象，从它可以获取异步操作的消息。
+//Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject。它们是两个函数，由 JavaScript 引擎提供，不用自己部署。
+const promise = new Promise(function(resolve,reject){
+	if(/*操作成功*/true){
+		resolve()
+	}else{
+		reject(error)
+	}
+})
+//resolve函数的作用是，将Promise对象的状态从“未完成”变为“成功”（即从 pending 变为 resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；
+//reject函数的作用是，将Promise对象的状态从“未完成”变为“失败”（即从 pending 变为 rejected），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。
+    const getJson = function(url){
+		const promiseReauest = new Promise(function(resolve,reject){
+			const handler = function(){
+				if(this.readyState != 4){
+					return
+				}
+				if(this.status == 200){
+					resolve(this.response)
+				}else{
+					reject(new Error(this.statusText))
+				}
+			};
+			const client = new XMLHttpRequest();
+			client.open("GET",url);
+			client.onreadystatechange = handler;
+			client.responseType = 'json';
+			client.setRequestHeader("Accept", "application/json");
+			client.send();
+		})
+		return promiseReauest;
+	}
+     
+	const objects = {
+		 "name":"Jack",
+	 }
+
+	</script>
+</html>

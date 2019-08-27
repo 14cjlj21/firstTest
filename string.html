@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+  <script type="text/javascript">
+	 // 字符串可以被视为字符数组，因此可以使用数组的方括号运算符，用来返回某个位置的字符（位置编号从0开始）
+	 // 如果方括号中的数字超过字符串的长度，或者方括号中根本不是数字，则返回undefined。
+	 // 字符串内部的单个字符无法改变和增删，这些操作会默默地失败
+  	var s="hello";
+	  console.log(s[1],789);
+
+//Base64 转码
+//有时，文本里面包含一些不可打印的符号，比如 ASCII 码0到31的符号都无法打印出来，这时可以使用 Base64 编码，将它们转成可以打印的字符。
+//另一个场景是，有时需要以文本格式传递二进制数据，那么也可以使用 Base64 编码。
+//所谓 Base64 就是一种编码方法，可以将任意值转成 0～9、A～Z、a-z、+和/这64个字符组成的可打印字符。使用它的主要目的，不是为了加密，而是为了不出现特殊字符，简化程序的处理。
+//btoa()：任意值转为 Base64 编码               atob()：Base64 编码转为原来的值
+//注意，这两个方法不适合非 ASCII 码的字符，会报错。
+var str = "hello world";
+console.log(btoa(str),456);
+console.log(str);
+//要将非 ASCII 码字符转为 Base64 编码，必须中间插入一个转码环节，再使用这两个方法。
+function b64Encode(str) {
+  return btoa(encodeURIComponent(str));
+}
+
+function b64Decode(str) {
+  return decodeURIComponent(atob(str));
+}
+b64Encode('你好') // "JUU0JUJEJUEwJUU1JUE1JUJE"
+b64Decode('JUU0JUJEJUEwJUU1JUE1JUJE') // "你好"
+
+//string 对象的静态方法
+String.fromCharCode() //该方法的参数是一个或多个数值，代表 Unicode 码点，返回值是这些码点组成的字符串。
+String.fromCharCode(104, 101, 108, 108, 111)    // "hello"
+
+//实例方法
+//String.prototype.charAt()  如果参数为负数，或大于等于字符串的长度，charAt返回空字符串。
+'abc'.charAt(1); //b
+'abc'[1] // "b"
+
+//String.prototype.charCodeAt()  返回字符串指定位置的 Unicode 码点（十进制表示），相当于String.fromCharCode()的逆操作。如果没有任何参数，charCodeAt返回首字符的 Unicode 码点。
+'abc'.charCodeAt(1) // 98
+
+//String.prototype.concat() concat方法用于连接两个字符串，返回一个新字符串，不改变原字符串。
+var s1="abd";
+var s2="ererere";
+var s3 = s1.concat(s2);
+console.log(s3);
+console.log(s1);
+//该方法可以接受多个参数。
+console.log('a'.concat('b', 'c'));
+
+//String.prototype.slice()
+//slice方法用于从原字符串取出子字符串并返回，不改变原字符串。它的第一个参数是子字符串的开始位置，第二个参数是子字符串的结束位置（不含该位置）。
+"javascript".slice(0,4);
+//如果省略第二个参数，则表示子字符串一直到原字符串结束。 如果参数是负值，表示从结尾开始倒数计算的位置，即该负值加上字符串长度。如果第一个参数大于第二个参数，slice方法返回一个空字符串。
+
+//String.prototype.substring()
+//substring方法用于从原字符串取出子字符串并返回，不改变原字符串，跟slice方法很相像。它的第一个参数表示子字符串的开始位置，第二个位置表示结束位置（返回结果不含该位置）。
+//如果第一个参数大于第二个参数，substring方法会自动更换两个参数的位置。如果参数是负数，substring方法会自动将负数转为0。
+
+
+//String.prototype.substr()
+//substr方法用于从原字符串取出子字符串并返回，不改变原字符串,第一个参数是子字符串的开始位置（从0开始计算），第二个参数是子字符串的长度
+//如果省略第二个参数，则表示子字符串一直到原字符串的结束。如果第一个参数是负数，表示倒数计算的字符位置。如果第二个参数是负数，将被自动转为0，因此会返回空字符串。
+
+
+//String.prototype.indexOf()  String.prototype.lastIndexOf()
+//indexOf方法用于确定一个字符串在另一个字符串中第一次出现的位置，返回结果是匹配开始的位置。如果返回-1，就表示不匹配。
+"hello world".indexOf("w");  //6
+//indexOf方法还可以接受第二个参数，表示从该位置开始向后匹配。
+'hello world'.indexOf('o', 6) // 7
+//lastIndexOf方法的用法跟indexOf方法一致，主要的区别是lastIndexOf从尾部开始匹配，indexOf则是从头部开始匹配。
+
+//String.prototype.trim()
+//trim方法用于去除字符串两端的空格，返回一个新字符串，不改变原字符串。
+//该方法去除的不仅是空格，还包括制表符（\t、\v）、换行符（\n）和回车符（\r）。
+'\r\nabc \t'.trim() // 'abc'
+
+//String.prototype.match()
+//match方法用于确定原字符串是否匹配某个子字符串，返回一个数组，成员为匹配的第一个字符串。如果没有找到匹配，则返回null。
+//返回的数组还有index属性和input属性，分别表示匹配字符串开始的位置和原始字符串
+var matchs = 'ctttttat, bat, sat, fat'.match("at");
+console.log(matchs,555);
+console.log(matchs.index,556);
+console.log(matchs.input,557);
+
+//search方法的用法基本等同于match，但是返回值为匹配的第一个位置。如果没有找到匹配，则返回-1。
+//replace方法用于替换匹配的子字符串，一般情况下只替换第一个匹配（除非使用带有g修饰符的正则表达式）。
+
+//String.prototype.split()
+//split方法按照给定规则分割字符串，返回一个由分割出来的子字符串组成的数组。split方法还可以接受第二个参数，限定返回数组的最大成员数。
+'a|b|c'.split('|') // ["a", "b", "c"]
+'a|b|c'.split('') // ["a", "|", "b", "|", "c"]
+//如果省略参数，则返回数组的唯一成员就是原字符串。
+'a|b|c'.split() // ["a|b|c"]
+
+
+//String.prototype.localeCompare()
+//localeCompare方法用于比较两个字符串。它返回一个整数，如果小于0，表示第一个字符串小于第二个字符串；如果等于0，表示两者相等；如果大于0，表示第一个字符串大于第二个字符串。
+
+
+
+
+
+
+  </script>
+
+</html>

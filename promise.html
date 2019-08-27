@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		let p = new Promise((resolve,reject)=>{
+			setTimeout(()=>{
+				console.log("P1");
+				resolve("我是之后的值啊")
+			},1000)
+		})
+	</script>
+</html>

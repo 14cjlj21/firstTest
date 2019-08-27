@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function fun(){
+				console.log(123)
+			}
+			fun();
+			//函数的内部属性:arguments和this
+			//arguments:一个类数组对象,包含着传入函数的所有参数,该对象还有一个callee属性,callee属性是一个指针,指向拥有这个arguments对象的函数
+			//this引用的是函数执行的环境对象
+			//函数对象属性:caller,这个属性保存着调用当前函数的函数的引用,如果在全局环境中调用当前函数,它的值为null
+			function outer(){
+				inner();
+			}
+			function inner(){
+				console.log(arguments.callee.caller)
+			}
+			outer();  //outer函数调用了inner函数,所以会打印出outer函数
+			
+			//函数的属性和方法:length和prototype(不可枚举)
+			//length属性表示函数希望接收的命名参数的个数
+			
+			//函数的2个非继承的方法:call(),apply(),都是在特定的作用域中调用函数,实际上等于设置函数体内this对象的值,作用在于扩充函数赖以运行的作用域
+			//apply(在其中运行函数的作用域,参数数组),参数数组可以是array实例,也可以是arguments对象
+			//call(this,参数1,参数2,参数3......)
+			
+			var color = "red";
+			var o={
+				color:"blue"
+			}
+			function sayColor(){
+				console.log(this.color,1111)
+			}
+			sayColor();
+			sayColor.call(this);
+			sayColor.call(window);
+			sayColor.call(o);
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

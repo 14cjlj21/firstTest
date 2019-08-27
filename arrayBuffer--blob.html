@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ArrayBuffer对象</title>
+	</head>
+	<body>
+		 <input type="file" accept="image/*" multiple onchange="fileinfo(this.files)"/>
+		 <input type="file" multiple onchange="fileinfo1(this.files)"/>
+		 <img src="image/20180817_072229.jpg" alt="" id="myImage">
+
+	</body>
+  <script type="text/javascript">
+  // ArrayBuffer对象、TypedArray视图和DataView视图是 JavaScript 操作二进制数据的一个接口,它们都是以数组的语法处理二进制数据，所以统称为二进制数组。
+  //二进制数组并不是真正的数组，而是类似数组的对象
+  //ArrayBuffer对象代表储存二进制数据的一段内存，它不能直接读写，只能通过视图（TypedArray视图和DataView视图)来读写，视图的作用是以指定格式解读二进制数据。
+  var buffer = new ArrayBuffer(32);     //实例对象buffer占用8个字节。每个字节的值默认都是 0。ArrayBuffer构造函数的参数是所需要的内存大小（单位字节）
+  //为了读写这段内容，需要为它指定视图。DataView视图的创建，需要提供ArrayBuffer对象实例作为参数。
+  const dataView = new DataView(buffer);
+
+  //ArrayBuffer.prototype.byteLength,返回所分配的内存区域的字节长度
+  //如果要分配的内存区域很大，有可能分配失败（因为没有那么多的连续空余内存），所以有必要检查是否分配成功。
+  if (buffer.byteLength === 32) {
+    console.log(buffer.byteLength,"分配成功"); //32
+  } else {
+    console.log("分配失败",666);
+  }
+
+  //ArrayBuffer.prototype.slice()允许将内存区域的一部分，拷贝生成一个新的ArrayBuffer对象。除了slice方法，ArrayBuffer对象不提供任何直接读写内存的方法，只允许在其上方建立视图，然后通过视图读写。
+  const buffer1 = new ArrayBuffer(50);
+  const  newBuffer1 = buffer1.slice(12,24);
+  console.log(buffer1.byteLength,712);
+  console.log(newBuffer1.byteLength,713);
+
+
+	//Blob 对象表示一个不可变、原始数据的类文件对象。File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
+	//Blob 对象表示一个二进制文件的数据内容，比如一个图片文件的内容就可以通过 Blob 对象读写。它通常用来读写文件，
+ //它与 ArrayBuffer 的区别在于，它用于操作二进制文件，而 ArrayBuffer 用于操作内存
+ //浏览器原生提供Blob()构造函数，用来生成实例对象。new Blob(array [, options])
+ //Blob构造函数接受两个参数。第一个参数是数组，成员是字符串或二进制对象，表示新生成的Blob实例对象的内容；
+ //第二个参数是可选的，是一个配置对象，目前只有一个属性type，它的值是一个字符串，表示数据的 MIME 类型，默认是空字符串。
+ const htmlFragment = ['<a id="a"><b id="b">hey!</b></a>'];
+ const myBlob = new Blob(htmlFragment,{type:"text/html"});
+ console.log(myBlob,811);
+ console.log(myBlob.size,812);
+
+ const obj={
+	 hello:"world",
+	 name:"jackkkkk"
+ };
+ const myBlob1 = new Blob([JSON.stringify(obj)],{type:"application/json"});
+ console.log(myBlob1,813);
+
+ //Blob具有两个实例属性size和type，分别返回数据的大小和类型。
+ myBlob1.size;
+ myBlob1.type;
+
+//Blob具有一个实例方法slice，用来拷贝原来的数据，返回的也是一个Blob实例。myBlob.slice(start，end, contentType)
+//slice方法有三个参数，都是可选的。它们依次是起始的字节位置（默认为0）、结束的字节位置（默认为size属性的值，该位置本身将不包含在拷贝的数据之中）、新实例的数据类型（默认为空字符串）。
+const myBolb2 = myBlob1.slice(2,12,"application/json");
+console.log(myBolb2,814);
+
+//文件选择器<input type="file">用来让用户选取文件。出于安全考虑，浏览器不允许脚本自行设置这个控件的value属性，即文件必须是用户手动选取的，不能是脚本指定的。一旦用户选好了文件，脚本就可以读取这个文件。
+//文件选择器返回一个 FileList 对象，该对象是一个类似数组的成员，每个成员都是一个 File 实例对象。File 实例对象是一个特殊的 Blob 实例，增加了name和lastModifiedDate属性。
+//除了文件选择器，拖放 API 的dataTransfer.files返回的也是一个FileList 对象，它的成员因此也是 File 实例对象。
+function fileinfo(files){
+	for(var i=0;i<files.length;i++){
+		var f= files[i];
+		console.log(
+			f,
+			f.name,
+			f.size,
+			f.type,
+			f.lastModifiedDate
+		);
+	}
+}
+
+//下载文件  AJAX 请求时，如果指定responseType属性为blob，下载下来的就是一个 Blob 对象。
+  function getBlob(url,callback){
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET",url);
+		xhr.responseType="blob";
+		xhr.onload=function(){
+			callback(xhr.response)
+		}
+		xhr.send(null)
+	}
+
+//生成 URL 浏览器允许使用URL.createObjectURL()方法，针对 Blob 对象生成一个临时 URL，以便于某些 API 使用。
+//这个 URL 以blob://开头，表明对应一个 Blob 对象，协议头后面是一个识别符，用来唯一对应内存里面的 Blob 对象。
+//为拖放的图片文件生成一个 URL,产生它们的缩略图，从而使得用户可以预览选择的文件。
+ const droptarget = document.getElementById("myImage");
+ console.log(droptarget,996);
+ droptarget.ondrop = function(e){
+    let files = e.dataTransfer.files;
+		for(var j = 0;j<files.length;j++){
+			var types=files[j].type;
+			if(types.substring(0,6) !== "image/")
+			continue;
+			var img = document.createElement("img");
+			img.src = URL.createObjectURL(files[j]);
+			img.onload= function(){
+				this.width = 100;
+				document.body.appendChild(this);
+				URL.revokeObjectURL(this.src)
+			}
+		}
+ }
+
+  </script>
+</html>

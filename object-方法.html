@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		//1. Object.getPrototypeOf():方法返回参数对象的原型。这是获取原型对象的标准方法.
+		var F = function(){};
+		var f = new F();
+		console.log(Object.getPrototypeOf(f) == F.prototype,"获取参数的原型对象");
+		
+		//2. Object.setPrototypeOf():为参数对象设置原型，返回该参数对象。它接受两个参数，第一个是现有对象，第二个是原型对象。
+		var a={};
+		var b= {
+			x:1,
+			fun:function(){}
+		};
+		Object.setPrototypeOf(a,b);
+		Object.getPrototypeOf(a)
+		console.log(Object.getPrototypeOf(a)==b);
+		//上面代码中，Object.setPrototypeOf方法将对象a的原型，设置为对象b，因此a可以共享b的属性。
+		
+		//3. Object.create():该方法接受一个对象作为参数，然后以它为原型，返回一个实例对象。该实例完全继承原型对象的属性。
+		var obj ={
+			print:function(){
+				console.log("hello");
+			}
+		}
+		var obj1 = Object.create(obj);
+		console.log(Object.getPrototypeOf(obj1) == obj,55555)
+		console.log(obj1.print(),888)
+		//上面代码中，Object.create方法以obj对象为原型，生成了obj1对象。obj1继承了obj的所有属性和方法。
+		
+	</script>
+</html>

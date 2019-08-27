@@ -1,0 +1,375 @@
+{
+    "code": 1000,
+    "message": "success",
+    "data": {
+        "device": [{
+            "mac": "FC-45-96-78-EE-96",
+            "bluetooth": "PrioM-B012",
+            "hardware": "gght1",
+            "software": "dt4"
+        }],
+        "userInfo": {
+            "id": 2,
+            "username": "华永安康1",
+            "mobile": "13698129385",
+            "image": "image/20180817_072229.jpg",
+            "sex": 2,
+            "birthday": "2018-01-06",
+            "age": "19",
+            "height": "1.80",
+            "weight": "50.55",
+            "vip": "普通会员",
+            "address": null,
+            "real_name": "华永",
+            "num": 1,
+            "create_time": 1542103387,
+            "height_unit": 0,
+            "weight_unit": 1
+        },
+        "temp": {
+            "unit": 1,
+            "day": [
+            {
+                    "id": 1,
+                    "temperature": "36.54",
+                    "ambient": "14.0",
+                    "describe": "高热",
+                    "create_time": 1234567810
+                },
+                {
+                    "id": 2,
+                    "temperature": "36.7",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {  
+                    "id": 3,
+                    "temperature": "37.1",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {
+                    "id": 1,
+                    "temperature": "38.7",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {
+                    "id": 2,
+                    "temperature": "36.7",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {
+                    "id": 3,
+                    "temperature": "37.1",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {
+                    "id": 3,
+                    "temperature": "37.1",
+                    "ambient": "14.0",
+                    "describe": "高热",
+                    "create_time": 1234567810
+                }
+            ],
+            "week": [
+                {
+                    "id": 1,
+                    "temperature": "35",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {
+                    "id": 2,
+                    "temperature": "36.7",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {  
+                    "id": 3,
+                    "temperature": "37.5",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {
+                    "id": 4,
+                    "temperature": "38.5",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {
+                    "id": 5,
+                    "temperature": "39.8",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {
+                    "id": 6,
+                    "temperature": "42",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                },
+                {
+                    "id": 7,
+                    "temperature": "37.1",
+                    "ambient": "14.0",
+                    "describe": "正常",
+                    "create_time": 1234567810
+                }
+
+            ]
+        },
+        "pres": {
+            "day": {
+                "id": 1,
+                "systolic": 125,
+                "diastolic": 89,
+                "pulse_rate": 98,
+                "describe": "正常",
+                "note": "",
+                "create_time": 1234567010
+            },
+            "week": [
+                {
+                    "id": 1,
+                    "systolic": 165,
+                    "diastolic": 60,
+                    "pulse_rate": 98,
+                    "describe": "正常",
+                    "note": "",
+                    "create_time": 1234567010
+                },
+                {
+                    "id": 1,
+                    "systolic": 140,
+                    "diastolic": 70,
+                    "pulse_rate": 98,
+                    "describe": "正常",
+                    "note": "",
+                    "create_time": 1234567010
+                },
+                {
+                    "id": 1,
+                    "systolic": 150,
+                    "diastolic": 70,
+                    "pulse_rate": 98,
+                    "describe": "正常",
+                    "note": "",
+                    "create_time": 1234567010
+                },
+                {
+                    "id": 1,
+                    "systolic": 165,
+                    "diastolic": 60,
+                    "pulse_rate": 98,
+                    "describe": "正常",
+                    "note": "",
+                    "create_time": 1234567010
+                },
+                {
+                    "id": 1,
+                    "systolic": 140,
+                    "diastolic": 70,
+                    "pulse_rate": 98,
+                    "describe": "正常",
+                    "note": "",
+                    "create_time": 1234567010
+                },
+                {
+                    "id": 1,
+                    "systolic": 165,
+                    "diastolic": 60,
+                    "pulse_rate": 98,
+                    "describe": "正常",
+                    "note": "",
+                    "create_time": 1234567010
+                },
+                {
+                    "id": 1,
+                    "systolic": 140,
+                    "diastolic": 70,
+                    "pulse_rate": 98,
+                    "describe": "正常",
+                    "note": "",
+                    "create_time": 1234567010
+                }
+            ]
+        },
+        "oxy": {
+            "day": {
+                "id": 1,
+                "oxygen": 98,
+                "pulse_rate": 76,
+                "describe": "正常",
+                "create_time": 1234567891
+            },
+            "week": [
+                {
+                    "id": 1,
+                    "oxygen": 98,
+                    "pulse_rate": 76,
+                    "describe": "正常",
+                    "create_time": 1234567891
+                },
+                {
+                    "id": 1,
+                    "oxygen": 98,
+                    "pulse_rate": 76,
+                    "describe": "正常",
+                    "create_time": 1234567891
+                },
+                {
+                    "id": 1,
+                    "oxygen": 98,
+                    "pulse_rate": 76,
+                    "describe": "正常",
+                    "create_time": 1234567891
+                },
+                {
+                    "id": 1,
+                    "oxygen": 98,
+                    "pulse_rate": 76,
+                    "describe": "正常",
+                    "create_time": 1234567891
+                },
+                {
+                    "id": 1,
+                    "oxygen": 98,
+                    "pulse_rate": 76,
+                    "describe": "正常",
+                    "create_time": 1234567891
+                }
+            ]
+        },
+        "hr": {
+            "day": [
+                {
+                    "id": 1,
+                    "hr_max": 90,
+                    "hr_min": 80,
+                    "hr_avg": 85,
+                    "describe": "正常",
+                    "create_time": 1234567895
+                },
+                {
+                    "id": 2,
+                    "hr_max": 90,
+                    "hr_min": 80,
+                    "hr_avg": 120,
+                    "describe": "正常",
+                    "create_time": 1234567895
+                },
+                {
+                    "id": 1,
+                    "hr_max": 90,
+                    "hr_min": 80,
+                    "hr_avg": 50,
+                    "describe": "正常",
+                    "create_time": 1234567895
+                },
+                {
+                    "id": 2,
+                    "hr_max": 90,
+                    "hr_min": 80,
+                    "hr_avg": 85,
+                    "describe": "正常",
+                    "create_time": 1234567895
+                }
+            ],
+            "week": [
+                {
+                    "id": 1,
+                    "hr_max": 90,
+                    "hr_min": 80,
+                    "hr_avg": 85,
+                    "describe": "正常",
+                    "create_time": 1234567895
+                },
+                {
+                    "id": 2,
+                    "hr_max": 90,
+                    "hr_min": 80,
+                    "hr_avg": 130,
+                    "describe": "正常",
+                    "create_time": 1234567895
+                },
+                {
+                    "id": 1,
+                    "hr_max": 90,
+                    "hr_min": 80,
+                    "hr_avg": 85,
+                    "describe": "正常",
+                    "create_time": 1234567895
+                },
+                {
+                    "id": 2,
+                    "hr_max": 90,
+                    "hr_min": 80,
+                    "hr_avg": 30,
+                    "describe": "正常",
+                    "create_time": 1234567895
+                }
+            ]
+        },
+        "ecg": {
+            "day": {
+                "id": 2,
+                "start_time": 1234567991,
+                "end_time": 1234579872,
+                "describe": [
+                    {
+                        "data_id": 3,
+                        "lead_mode": "I",
+                        "file_data": "心电数据16进制的字符串",
+                        "analysis": [
+                            {
+                                "type": 1,
+                                "per": 95.3,
+                                "num": 122,
+                                "explain": "心律正常"
+                            },
+                            {
+                                "type": 330,
+                                "per": 4.7,
+                                "num": 6,
+                                "explain": "右束支传导阻滞"
+                            }
+                        ]
+                    },
+                    {
+                        "data_id": 4,
+                        "lead_mode": "Ⅱ",
+                        "file_data": "心电数据16进制的字符串",
+                        "analysis": [
+                            {
+                                "type": 1,
+                                "per": 95.3,
+                                "num": 122,
+                                "explain": "心律正常"
+                            },
+                            {
+                                "type": 330,
+                                "per": 4.7,
+                                "num": 6,
+                                "explain": "右束支传导阻滞"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
